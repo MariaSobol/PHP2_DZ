@@ -14,8 +14,12 @@ class PhysicalProduct extends Product
     public function getFinalValue($qty)
     {
         if (is_int($qty)){
-            return $this->price * $qty;
+            return ($this->price * $qty) * 1.15; //чтобы получить доход с продаж, добавляем к конечной стоимости 15%
         }
         return false;
+    }
+
+    public function getProfitFromQty($qty){
+        return $this->getFinalValue($qty) - $this->price * $qty;
     }
 }

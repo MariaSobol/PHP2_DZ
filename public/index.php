@@ -9,3 +9,5 @@ $productD = new \models\DigitalProduct($productP);
 
 var_dump($productP);
 var_dump($productD);
+
+echo $productP->getProfitFromQty(5);

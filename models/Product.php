@@ -35,6 +35,10 @@ abstract class Product extends Model
     //т.к. PhysicalProduct должен принимать только int, а ProductByWeight - int и double.
     // Поэтому придётся делать проверки в реализациях метода в дочерних классах.
 
+    //Не совсем поняла где должно храниться значение дохода с продаж,
+    //поэтому сделала просто функцию подсчёта прибыли в зависимости от количества продаваемого товара
+    abstract public function getProfitFromQty($qty);
+
     /**
      * @return mixed
      */
