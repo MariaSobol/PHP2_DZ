@@ -1,14 +1,17 @@
 <?php
-namespace models;
+namespace app\models;
 
-abstract class Model implements \interfaces\ModelInterface
+use app\interfaces\ModelInterface;
+use app\services\Db;
+
+abstract class Model implements ModelInterface
 {
     protected $tableName;
     protected $db = null;
 
     public function __construct()
     {
-        $this->db = new \services\Db();
+        $this->db = new Db();
         $this->tableName = $this->getTableName();
     }
 

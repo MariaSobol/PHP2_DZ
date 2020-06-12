@@ -1,5 +1,5 @@
 <?php
-namespace services;
+namespace app\services;
 
 class Db
 {

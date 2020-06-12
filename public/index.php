@@ -1,13 +1,10 @@
 <?php
 
-require $_SERVER['DOCUMENT_ROOT'] . "/../services/Autoloader.php";
+require $_SERVER['DOCUMENT_ROOT'] . "/../config/main.php";
+require ROOT_DIR . "services/Autoloader.php";
 
-spl_autoload_register([new Autoloader(), 'loadClass']);
+spl_autoload_register([new app\services\Autoloader(), 'loadClass']);
 
-$productP = new \models\PhysicalProduct("ProductP", "description", 1000);
-$productD = new \models\DigitalProduct($productP);
+$product = new app\models\Product("Product", "description", 1000);
 
-var_dump($productP);
-var_dump($productD);
-
-echo $productP->getProfitFromQty(5);
+var_dump($product);

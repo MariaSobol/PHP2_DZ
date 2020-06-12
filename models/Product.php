@@ -1,7 +1,7 @@
 <?php
-namespace models;
+namespace app\models;
 
-abstract class Product extends Model
+class Product extends Model
 {
     protected $id;
     protected $name;
@@ -30,14 +30,6 @@ abstract class Product extends Model
     {
         return "products";
     }
-
-    abstract public function getFinalValue($qty); //не получается применить строгую типизацию для этого абстрактного метода,
-    //т.к. PhysicalProduct должен принимать только int, а ProductByWeight - int и double.
-    // Поэтому придётся делать проверки в реализациях метода в дочерних классах.
-
-    //Не совсем поняла где должно храниться значение дохода с продаж,
-    //поэтому сделала просто функцию подсчёта прибыли в зависимости от количества продаваемого товара
-    abstract public function getProfitFromQty($qty);
 
     /**
      * @return mixed
@@ -128,8 +120,5 @@ abstract class Product extends Model
         $this->category_id = $category_id;
         return $this;
     }
-
-
-
 
 }
