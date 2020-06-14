@@ -9,26 +9,18 @@ class Product extends Model
     protected $price;
     protected $category_id;
 
-    /**
-     * Product constructor.
-     * @param $id
-     * @param $name
-     * @param $description
-     * @param $price
-     * @param $category_id
-     */
-    public function __construct($name, $description = null, $price = null, $category_id = null)
-    {
-        parent::__construct();
-        $this->name = $name;
-        $this->description = $description;
-        $this->price = $price;
-        $this->category_id = $category_id;
-    }
 
     public function getTableName(): string
     {
         return "products";
+    }
+
+    public function getParamsForDb(): array
+    {
+        return ['name' => $this->name,
+                'description' => $this->description,
+                'price' => $this->price,
+                'category_id' => $this->category_id];
     }
 
     /**

@@ -5,6 +5,9 @@ require ROOT_DIR . "services/Autoloader.php";
 
 spl_autoload_register([new app\services\Autoloader(), 'loadClass']);
 
-$product = new app\models\Product("Product", "description", 1000);
+$user = (new \app\models\User())->getById(5);
+$user->setLogin("Matt");
 
-var_dump($product);
+var_dump($user->updateInDb());
+
+

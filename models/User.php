@@ -3,14 +3,25 @@ namespace app\models;
 
 class User extends Model
 {
-    public $id;
-    public $login;
-    public $password;
-    public $email;
+    protected $id;
+    protected $login;
+    protected $password;
+    protected $name;
+    protected $email;
+    protected $address;
 
     public function getTableName(): string
     {
         return "users";
+    }
+
+    public function getParamsForDb(): array
+    {
+        return ['login' => $this->login,
+                'password' => $this->password,
+                'name' => $this->name,
+                'email' => $this->email,
+                'address' => $this->address];
     }
 
     /**
@@ -84,5 +95,42 @@ class User extends Model
         $this->email = $email;
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     * @return mixed
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     * @return mixed
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+        return $this;
+    }
+
 
 }
