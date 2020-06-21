@@ -6,8 +6,19 @@ namespace app\models;
 
 class ProductCategory extends Model
 {
-    protected $id;
+    protected $id = 0;
     protected $category;
+
+    /**
+     * ProductCategory constructor.
+     * @param $category
+     */
+    public function __construct($category = null)
+    {
+        parent::__construct();
+        $this->category = $category;
+    }
+
 
     public function getTableName(): string
     {

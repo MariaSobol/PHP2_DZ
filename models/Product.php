@@ -3,11 +3,28 @@ namespace app\models;
 
 class Product extends Model
 {
-    protected $id;
+    protected $id = 0;
     protected $name;
     protected $description;
     protected $price;
     protected $category_id;
+
+    /**
+     * Product constructor.
+     * @param $name
+     * @param $description
+     * @param $price
+     * @param $category_id
+     */
+
+    public function __construct($name = null, $description = null, $price = null, $category_id = 1)
+    {
+        parent::__construct();
+        $this->name = $name;
+        $this->description = $description;
+        $this->price = $price;
+        $this->category_id = $category_id;
+    }
 
 
     public function getTableName(): string

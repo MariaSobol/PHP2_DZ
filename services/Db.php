@@ -58,8 +58,13 @@ class Db
     public function queryAll(string $sql, $classname, array $params = [])
     {
         $pdoStatement = $this->query($sql, $params);
-        $pdoStatement->setFetchMode(\PDO::FETCH_CLASS, $classname);
+        $pdoStatement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $classname);
         return $pdoStatement->fetchAll();
+    }
+
+    public function getLastInsertId()
+    {
+        return $this->getConnection()->lastInsertId();
     }
 
     private function buildDsnString()

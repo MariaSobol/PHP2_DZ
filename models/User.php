@@ -3,12 +3,32 @@ namespace app\models;
 
 class User extends Model
 {
-    protected $id;
+    protected $id = 0;
     protected $login;
     protected $password;
     protected $name;
     protected $email;
     protected $address;
+
+    /**
+     * User constructor.
+     * @param $id
+     * @param $login
+     * @param $password
+     * @param $name
+     * @param $email
+     * @param $address
+     */
+    public function __construct($login = null, $password = null, $name = null, $email = null, $address = null)
+    {
+        parent::__construct();
+        $this->login = $login;
+        $this->password = $password;
+        $this->name = $name;
+        $this->email = $email;
+        $this->address = $address;
+    }
+
 
     public function getTableName(): string
     {

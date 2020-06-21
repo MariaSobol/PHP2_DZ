@@ -6,8 +6,19 @@ namespace app\models;
 
 class OrderStatus extends Model
 {
-    protected $id;
+    protected $id = 0;
     protected $status;
+
+    /**
+     * OrderStatus constructor.
+     * @param $status
+     */
+    public function __construct($status = null)
+    {
+        parent::__construct();
+        $this->status = $status;
+    }
+
 
     public function getTableName(): string
     {

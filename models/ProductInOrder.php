@@ -10,6 +10,21 @@ class ProductInOrder extends Model
     protected $order_id;
     protected $quantity;
 
+    /**
+     * ProductInOrder constructor.
+     * @param $product_id
+     * @param $order_id
+     * @param $quantity
+     */
+    public function __construct($product_id = null, $order_id = null, $quantity = null)
+    {
+        parent::__construct();
+        $this->product_id = $product_id;
+        $this->order_id = $order_id;
+        $this->quantity = $quantity;
+    }
+
+
     public function getTableName(): string
     {
         return "product_in_order";
@@ -22,7 +37,7 @@ class ProductInOrder extends Model
                 'quantity' => $this->quantity];
     }
 
-    //TODO: переопределить методы для CRUD: getById(int $id), updateInDb(), deleteById(int $id)
+    //TODO: переопределить методы для CRUD: getById(int $id), updateInDb(), delete()
 
     /**
      * @return mixed

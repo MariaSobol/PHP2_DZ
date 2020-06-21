@@ -6,9 +6,23 @@ namespace app\models;
 
 class Order extends Model
 {
-    protected $id;
+    protected $id = 0;
     protected $user_id;
     protected $status_id;
+
+    /**
+     * Order constructor.
+     * @param $user_id
+     * @param $status_id
+     */
+
+    public function __construct($user_id = null, $status_id = null)
+    {
+        parent::__construct();
+        $this->user_id = $user_id;
+        $this->status_id = $status_id;
+    }
+
 
     public function getTableName(): string
     {
