@@ -1,13 +1,14 @@
 <?php
 namespace app\models;
 
-class Product extends Model
+class Product extends Record
 {
     protected $id = 0;
     protected $name;
     protected $description;
     protected $price;
     protected $category_id;
+    protected $imagelink;
 
     /**
      * Product constructor.
@@ -17,7 +18,7 @@ class Product extends Model
      * @param $category_id
      */
 
-    public function __construct($name = null, $description = null, $price = null, $category_id = 1)
+    public function __construct($name = null, $description = null, $price = null, $category_id = 1, $imagelink=null)
     {
         parent::__construct();
         $this->name = $name;
@@ -27,7 +28,7 @@ class Product extends Model
     }
 
 
-    public function getTableName(): string
+    public static function getTableName(): string
     {
         return "products";
     }
@@ -127,6 +128,24 @@ class Product extends Model
     public function setCategoryId($category_id)
     {
         $this->category_id = $category_id;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImagelink()
+    {
+        return $this->imagelink;
+    }
+
+    /**
+     * @param mixed $imagelink
+     * @return mixed
+     */
+    public function setImagelink($imagelink)
+    {
+        $this->imagelink = $imagelink;
         return $this;
     }
 

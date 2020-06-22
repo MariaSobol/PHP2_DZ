@@ -4,7 +4,7 @@
 namespace app\models;
 
 
-class ProductCategory extends Model
+class ProductCategory extends Record
 {
     protected $id = 0;
     protected $category;
@@ -20,7 +20,7 @@ class ProductCategory extends Model
     }
 
 
-    public function getTableName(): string
+    public static function getTableName(): string
     {
         return "product_category";
     }

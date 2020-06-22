@@ -4,7 +4,7 @@
 namespace app\models;
 
 
-class Order extends Model
+class Order extends Record
 {
     protected $id = 0;
     protected $user_id;
@@ -24,7 +24,7 @@ class Order extends Model
     }
 
 
-    public function getTableName(): string
+    public static function getTableName(): string
     {
         return "orders";
     }

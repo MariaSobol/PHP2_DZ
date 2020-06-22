@@ -4,36 +4,35 @@
 namespace app\models;
 
 
-class ProductInOrder extends Record
+class ProductInCart extends Record
 {
+    protected $user_id;
     protected $product_id;
-    protected $order_id;
     protected $quantity;
 
     /**
-     * ProductInOrder constructor.
+     * ProductInCart constructor.
+     * @param $user_id
      * @param $product_id
-     * @param $order_id
      * @param $quantity
      */
-    public function __construct($product_id = null, $order_id = null, $quantity = null)
+    public function __construct($user_id = null, $product_id = null, $quantity = null)
     {
         parent::__construct();
+        $this->user_id = $user_id;
         $this->product_id = $product_id;
-        $this->order_id = $order_id;
         $this->quantity = $quantity;
     }
 
-
     public static function getTableName(): string
     {
-        return "product_in_order";
+        return "product_in_cart";
     }
 
     public function getParamsForDb()
     {
-        return ['product_id' => $this->product_id,
-                'order_id' => $this->order_id,
+        return ['user_id' => $this->user_id,
+                'product_id' => $this->product_id,
                 'quantity' => $this->quantity];
     }
 
@@ -49,7 +48,7 @@ class ProductInOrder extends Record
 
         $sql = "UPDATE {$tableName}
                 SET {$set}
-	            WHERE product_id = {$this->product_id} AND order_id = {$this->order_id}";
+	            WHERE user_id = {$this->user_id} AND product_id = {$this->product_id}";
         return $this->db->execute($sql, $paramsForDb);
     }
 
@@ -63,7 +62,7 @@ class ProductInOrder extends Record
 
         $sql = "UPDATE {$tableName}
                 SET {$set}
-	            WHERE product_id = {$this->product_id} AND order_id = {$this->order_id}";
+	            WHERE user_id = {$this->user_id} AND product_id = {$this->product_id}";
 
         return $this->db->execute($sql, $paramsForDb);
     }
@@ -71,16 +70,16 @@ class ProductInOrder extends Record
     public function delete(){
         $tableName = static::getTableName();
         $sql = "DELETE FROM {$tableName}
-	            WHERE product_id = {$this->product_id} AND order_id = {$this->order_id}";
+	            WHERE user_id = {$this->user_id} AND product_id = {$this->product_id}";
         return $this->db->execute($sql);
     }
 
     public function save()
     {
         $modelFromDb = \app\models\ModelFactory::getByIds(get_called_class(), [
-            'product_id' => $this->product_id,
-            'order_id' => $this->order_id
-        ]);
+                                                                                'user_id' => $this->user_id,
+                                                                                'product_id' => $this->product_id
+                                                                               ]);
         if(is_null($modelFromDb)){
             return($this->insert());
         }
@@ -95,8 +94,27 @@ class ProductInOrder extends Record
         }
     }
 
+
     /**
-     * @return mixed
+     * @return null
+     */
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * @param null $user_id
+     * @return null
+     */
+    public function setUserId($user_id)
+    {
+        $this->user_id = $user_id;
+        return $this;
+    }
+
+    /**
+     * @return null
      */
     public function getProductId()
     {
@@ -104,8 +122,8 @@ class ProductInOrder extends Record
     }
 
     /**
-     * @param mixed $product_id
-     * @return mixed
+     * @param null $product_id
+     * @return null
      */
     public function setProductId($product_id)
     {
@@ -114,25 +132,7 @@ class ProductInOrder extends Record
     }
 
     /**
-     * @return mixed
-     */
-    public function getOrderId()
-    {
-        return $this->order_id;
-    }
-
-    /**
-     * @param mixed $order_id
-     * @return mixed
-     */
-    public function setOrderId($order_id)
-    {
-        $this->order_id = $order_id;
-        return $this;
-    }
-
-    /**
-     * @return mixed
+     * @return null
      */
     public function getQuantity()
     {
@@ -140,13 +140,12 @@ class ProductInOrder extends Record
     }
 
     /**
-     * @param mixed $quantity
-     * @return mixed
+     * @param null $quantity
+     * @return null
      */
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
         return $this;
     }
-
 }

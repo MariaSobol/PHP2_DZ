@@ -30,10 +30,10 @@ class Db
                 $this->config['password']
             );
 
-//            $this->connection->setAttribute(
-//                \PDO::ATTR_DEFAULT_FETCH_MODE,
-//                \PDO::FETCH_ASSOC
-//            );
+            $this->connection->setAttribute(
+                \PDO::ATTR_DEFAULT_FETCH_MODE,
+                \PDO::FETCH_ASSOC
+            );
         }
 
         return $this->connection;
@@ -50,12 +50,22 @@ class Db
         return $this->query($sql, $params)->rowCount();
     }
 
-    public function queryOne(string $sql, $classname, array $params = [])
+    public function queryOne(string $sql, array $params = [])
     {
-        return $this->queryAll($sql, $classname, $params)[0];
+        return $this->queryAll($sql, $params)[0];
     }
 
-    public function queryAll(string $sql, $classname, array $params = [])
+    public function queryAll(string $sql, array $params = [])
+    {
+        return $this->query($sql, $params)->fetchAll();
+    }
+
+    public function queryOneObject(string $sql, $classname, array $params = [])
+    {
+        return $this->queryAllObjects($sql, $classname, $params)[0];
+    }
+
+    public function queryAllObjects(string $sql, $classname, array $params = [])
     {
         $pdoStatement = $this->query($sql, $params);
         $pdoStatement->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $classname);
