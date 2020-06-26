@@ -5,7 +5,6 @@ namespace app\controllers;
 
 
 use app\models\Cart;
-use app\models\Product;
 
 class CartController extends Controller
 {

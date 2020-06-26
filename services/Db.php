@@ -11,7 +11,7 @@ class Db
         'driver' => 'mysql',
         'host' => '192.168.1.64',
         'login' => 'root',
-        'password' => '',
+        'password' => '150485',
         'dbname' => 'shop_june',
         'charset' => 'utf8',
     ];
