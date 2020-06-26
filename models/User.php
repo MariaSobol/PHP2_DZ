@@ -1,6 +1,8 @@
 <?php
 namespace app\models;
 
+use app\services\Request;
+
 class User extends Record
 {
     protected $id = 0;
@@ -23,7 +25,7 @@ class User extends Record
     {
         parent::__construct();
         $this->login = $login;
-        $this->password = $password;
+        $this->password = (new Request())->getHash($password);
         $this->name = $name;
         $this->email = $email;
         $this->address = $address;
@@ -94,7 +96,7 @@ class User extends Record
      */
     public function setPassword($password)
     {
-        $this->password = $password;
+        $this->password = (new Request())->getHash($password);
         return $this;
     }
 

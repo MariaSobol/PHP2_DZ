@@ -14,12 +14,9 @@ class Cart
      * Cart constructor.
      * @param int $userId
      */
-    public function __construct(int $userId = 0)
+    public function __construct(int $userId = null)
     {
         $this->userId = $userId;
-        if($userId != 0){
-            $this->setCart();
-        }
     }
 
     public function setCart(){

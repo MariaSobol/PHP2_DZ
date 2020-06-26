@@ -57,4 +57,17 @@ class ModelFactory
         }
         return null;
     }
+
+    public static function getByParam(string $classname, string $columnName, $value)
+    {
+        if(stristr($classname, '\\') === false){
+            $classname = "app\models\\" . $classname;
+        }
+
+        if(class_exists($classname)){
+            $sql = "SELECT * FROM {$classname::getTableName()} WHERE $columnName = :value";
+            return Db::getInstance()->queryOneObject($sql, $classname, [':value' => $value]);
+        }
+        return null;
+    }
 }
