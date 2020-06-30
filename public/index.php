@@ -1,13 +1,17 @@
 <?php
 
+use app\exceptions\PageNotFoundException;
+
 require $_SERVER['DOCUMENT_ROOT'] . "/../config/main.php";
-//require ROOT_DIR . "services/Autoloader.php";
+require ROOT_DIR . "services/Autoloader.php";
 
-include VENDOR_DIR . "autoload.php";
-//spl_autoload_register([new app\services\Autoloader(), 'loadClass']);
+//include VENDOR_DIR . "autoload.php";
+spl_autoload_register([new app\services\Autoloader(), 'loadClass']);
 
-$controllerName = $_GET['c'] ?: 'product';
-$actionName = $_GET['a'];
+$request = new \app\services\Request();
+
+$controllerName = $request->getControllerName() ?: 'product';
+$actionName = $request->getActionName();
 
 $controllerClass = "app\controllers\\" . ucfirst($controllerName) . "Controller";
 
@@ -16,6 +20,10 @@ if(class_exists($controllerClass)) {
     $controller = new $controllerClass(
         new \app\services\renderers\TemplateRenderer()
     );
-    $controller->runAction($actionName);
+    try {
+        $controller->runAction($actionName);
+    } catch (PageNotFoundException $e) {
+        echo "404";
+    }
 }
 

@@ -25,7 +25,7 @@ class AccountController extends Controller
             $userName = $session->getParam('user_name');
             echo $this->render('account', ['login' => $login, 'userName' => $userName]);
         }else {
-            $request->redirect('/?c=login');
+            $request->redirect('/login');
         }
     }
 }

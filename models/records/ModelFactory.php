@@ -1,21 +1,21 @@
 <?php
 
 
-namespace app\models;
+namespace app\models\records;
 
 
 use app\services\Db;
 
 class ModelFactory
 {
-    public static function getById(string $classname, int $id)
+    public function getById(string $classname, int $id)
     {
         /*Проверяем приходит ли полное имя класса, влючающее namespace, или только само имя класса.
         Например, метод save() в классе Record передаёт имя класса через метод get_called_class(),
         который в свою очередь возвращает полное имя класса.
         В случае если приходит только имя добавляем пространство имён.*/
         if(stristr($classname, '\\') === false){
-            $classname = "app\models\\" . $classname;
+            $classname = "app\models\\records\\" . $classname;
         }
 
         if(class_exists($classname)){
@@ -25,10 +25,10 @@ class ModelFactory
         return null;
     }
 
-    public static function getAll($classname)
+    public function getAll($classname)
     {
         if(stristr($classname, '\\') === false){
-            $classname = "app\models\\" . $classname;
+            $classname = "app\models\\records\\" . $classname;
         }
 
         if(class_exists($classname)){
@@ -39,10 +39,10 @@ class ModelFactory
     }
 
     //Метод для таблиц с составным первичным ключом
-    public static function getByIds(string $classname, array $ids)
+    public function getByIds(string $classname, array $ids)
     {
         if(stristr($classname, '\\') === false){
-            $classname = "app\models\\" . $classname;
+            $classname = "app\models\\records\\" . $classname;
         }
 
         if(class_exists($classname)){
@@ -58,15 +58,28 @@ class ModelFactory
         return null;
     }
 
-    public static function getByParam(string $classname, string $columnName, $value)
+    public function getOneByParam(string $classname, string $columnName, $value)
     {
         if(stristr($classname, '\\') === false){
-            $classname = "app\models\\" . $classname;
+            $classname = "app\models\\records\\" . $classname;
         }
 
         if(class_exists($classname)){
             $sql = "SELECT * FROM {$classname::getTableName()} WHERE $columnName = :value";
             return Db::getInstance()->queryOneObject($sql, $classname, [':value' => $value]);
+        }
+        return null;
+    }
+
+    public function getAllByParam(string $classname, string $columnName, $value)
+    {
+        if(stristr($classname, '\\') === false){
+            $classname = "app\models\\records\\" . $classname;
+        }
+
+        if(class_exists($classname)){
+            $sql = "SELECT * FROM {$classname::getTableName()} WHERE $columnName = :value";
+            return Db::getInstance()->queryAllObjects($sql, $classname, [':value' => $value]);
         }
         return null;
     }

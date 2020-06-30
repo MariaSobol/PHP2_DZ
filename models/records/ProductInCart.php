@@ -1,8 +1,9 @@
 <?php
 
 
-namespace app\models;
+namespace app\models\records;
 
+use app\models\records\ModelFactory;
 
 class ProductInCart extends Record
 {
@@ -76,10 +77,10 @@ class ProductInCart extends Record
 
     public function save()
     {
-        $modelFromDb = \app\models\ModelFactory::getByIds(get_called_class(), [
-                                                                                'user_id' => $this->user_id,
-                                                                                'product_id' => $this->product_id
-                                                                               ]);
+        $modelFromDb = (new ModelFactory())->getByIds(get_called_class(), [
+                                                                    'user_id' => $this->user_id,
+                                                                    'product_id' => $this->product_id
+                                                                    ]);
         if(is_null($modelFromDb)){
             return($this->insert());
         }

@@ -1,8 +1,9 @@
 <?php
 
 
-namespace app\models;
+namespace app\models\records;
 
+use app\models\records\ModelFactory;
 
 class ProductInOrder extends Record
 {
@@ -77,7 +78,7 @@ class ProductInOrder extends Record
 
     public function save()
     {
-        $modelFromDb = \app\models\ModelFactory::getByIds(get_called_class(), [
+        $modelFromDb = (new ModelFactory())->getByIds(get_called_class(), [
             'product_id' => $this->product_id,
             'order_id' => $this->order_id
         ]);

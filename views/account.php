@@ -11,4 +11,7 @@
 <form action="" method="post">
     <input name="logout" value="Выход" type="submit"/>
 </form>
+<form action="/orders" method="post">
+    <input name="orders" value="Мои заказы" type="submit"/>
+</form>
 

@@ -4,6 +4,7 @@
 namespace app\controllers;
 
 
+use app\exceptions\PageNotFoundException;
 use app\services\renderers\IRender;
 
 abstract class Controller
@@ -27,7 +28,7 @@ abstract class Controller
         if(method_exists($this, $method)) {
             $this->$method();
         } else {
-            echo "404";
+            throw new PageNotFoundException("Страница не найдена!");
         }
     }
 
