@@ -4,10 +4,17 @@
 namespace app\models\records;
 
 
-use app\services\Db;
+use app\base\App;
 
 class ModelFactory
 {
+    protected $db = null;
+
+    public function __construct()
+    {
+        $this->db = App::getInstance()->connection;
+    }
+
     public function getById(string $classname, int $id)
     {
         /*Проверяем приходит ли полное имя класса, влючающее namespace, или только само имя класса.
@@ -20,7 +27,7 @@ class ModelFactory
 
         if(class_exists($classname)){
             $sql = "SELECT * FROM {$classname::getTableName()} WHERE id = :id";
-            return Db::getInstance()->queryOneObject($sql, $classname, [':id' => $id]);
+            return $this->db->queryOneObject($sql, $classname, [':id' => $id]);
         }
         return null;
     }
@@ -33,7 +40,7 @@ class ModelFactory
 
         if(class_exists($classname)){
             $sql = "SELECT * FROM {$classname::getTableName()}";
-            return Db::getInstance()->queryAllObjects($sql, $classname);
+            return $this->db->queryAllObjects($sql, $classname);
         }
         return null;
     }
@@ -53,7 +60,7 @@ class ModelFactory
             $params = implode(" AND ", $params);
 
             $sql = "SELECT * FROM {$classname::getTableName()} WHERE {$params}";
-            return Db::getInstance()->queryOneObject($sql, $classname, $ids);
+            return $this->db->queryOneObject($sql, $classname, $ids);
         }
         return null;
     }
@@ -66,7 +73,7 @@ class ModelFactory
 
         if(class_exists($classname)){
             $sql = "SELECT * FROM {$classname::getTableName()} WHERE $columnName = :value";
-            return Db::getInstance()->queryOneObject($sql, $classname, [':value' => $value]);
+            return $this->db->queryOneObject($sql, $classname, [':value' => $value]);
         }
         return null;
     }
@@ -79,7 +86,7 @@ class ModelFactory
 
         if(class_exists($classname)){
             $sql = "SELECT * FROM {$classname::getTableName()} WHERE $columnName = :value";
-            return Db::getInstance()->queryAllObjects($sql, $classname, [':value' => $value]);
+            return $this->db->queryAllObjects($sql, $classname, [':value' => $value]);
         }
         return null;
     }

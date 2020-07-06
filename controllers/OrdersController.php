@@ -4,17 +4,15 @@
 namespace app\controllers;
 
 
-use app\models\Cart;
+use app\base\App;
 use app\models\UserOrders;
-use app\services\Request;
-use app\services\Session;
 
 class OrdersController extends Controller
 {
     public function actionIndex(int $userId = 0)
     {
-        if(!($userId = (new Session())->getParam('user_id'))){
-            (new Request())->redirect('/login');
+        if(!($userId = App::getInstance()->session->getParam('user_id'))){
+            App::getInstance()->request->redirect('/login');
         }
 
         $orders = new UserOrders($userId);

@@ -16,15 +16,17 @@ class Product extends Record
      * @param $description
      * @param $price
      * @param $category_id
+     * @param $imagelink
      */
 
-    public function __construct($name = null, $description = null, $price = null, $category_id = 1, $imagelink=null)
+    public function __construct($name = null, $description = null, $price = null, $category_id = 1, $imagelink = null)
     {
         parent::__construct();
         $this->name = $name;
         $this->description = $description;
         $this->price = $price;
         $this->category_id = $category_id;
+        $this->imagelink = $imagelink;
     }
 
 
@@ -38,7 +40,8 @@ class Product extends Record
         return ['name' => $this->name,
                 'description' => $this->description,
                 'price' => $this->price,
-                'category_id' => $this->category_id];
+                'category_id' => $this->category_id,
+                'imagelink' => $this->imagelink];
     }
 
     /**

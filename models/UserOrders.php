@@ -4,7 +4,7 @@
 namespace app\models;
 
 
-use app\services\Db;
+use app\base\App;
 
 class UserOrders
 {
@@ -22,7 +22,7 @@ class UserOrders
                 JOIN order_status ON orders.status_id=order_status.id
                 WHERE orders.user_id = {$this->userId}";
 
-        $this->orders = Db::getInstance()->queryAll($sql);
+        $this->orders = App::getInstance()->connection->queryAll($sql);
         return $this;
     }
 

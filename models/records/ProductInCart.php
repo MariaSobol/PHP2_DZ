@@ -3,7 +3,7 @@
 
 namespace app\models\records;
 
-use app\models\records\ModelFactory;
+use app\base\App;
 
 class ProductInCart extends Record
 {
@@ -77,7 +77,7 @@ class ProductInCart extends Record
 
     public function save()
     {
-        $modelFromDb = (new ModelFactory())->getByIds(get_called_class(), [
+        $modelFromDb = App::getInstance()->modelFactory->getByIds(get_called_class(), [
                                                                     'user_id' => $this->user_id,
                                                                     'product_id' => $this->product_id
                                                                     ]);

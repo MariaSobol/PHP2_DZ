@@ -1,7 +1,6 @@
 <?php
 namespace app\models\records;
 
-use app\services\Request;
 use app\services\Security;
 
 class User extends Record

@@ -71,4 +71,17 @@ class Request
         return false;
     }
 
+    public function uploadFile(string $destinationDir, string $attributeName = 'file')
+    {
+        $originalFilename =  $_FILES[$attributeName]['name'];
+        $destination = $destinationDir . $originalFilename;
+
+        if (isset($_FILES[$attributeName])) {
+            if (move_uploaded_file($_FILES[$attributeName]['tmp_name'], $destination)){
+                return $originalFilename;
+            }
+        }
+
+        return null;
+    }
 }

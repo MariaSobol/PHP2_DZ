@@ -1,4 +1,4 @@
-<?php /** @var \app\models\Product $model */?>
+<?php /** @var \app\models\records\Product $model */?>
 
 <h1><?=$model->getName()?></h1>
 <a href="<?=$model->getImagelink()?>" target="_blank"><img class="main-image" src="<?=$model->getImagelink()?>" alt="<?=$model->getName()?>"></a>

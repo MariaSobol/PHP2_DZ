@@ -5,16 +5,19 @@ use app\traits\TSingleton;
 
 class Db
 {
-    use TSingleton;
+    protected $config;
 
-    private $config = [
-        'driver' => 'mysql',
-        'host' => '192.168.1.64',
-        'login' => 'root',
-        'password' => '150485',
-        'dbname' => 'shop_june',
-        'charset' => 'utf8',
-    ];
+    public function __construct($driver, $host, $login, $password, $dbname, $charset)
+    {
+        $this->config = [
+            'driver' => $driver,
+            'host' => $host,
+            'login' => $login,
+            'password' => $password,
+            'dbname' => $dbname,
+            'charset' => $charset
+        ];
+    }
 
     /**
      * @var \PDO

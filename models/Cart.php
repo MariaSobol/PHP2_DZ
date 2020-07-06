@@ -3,11 +3,10 @@
 
 namespace app\models;
 
-use app\models\records\ModelFactory;
+use app\base\App;
 use app\models\records\Order;
 use app\models\records\ProductInCart;
 use app\models\records\ProductInOrder;
-use app\services\Db;
 
 class Cart
 {
@@ -30,7 +29,7 @@ class Cart
                 JOIN products ON product_in_cart.product_id=products.id
                 WHERE product_in_cart.user_id = {$this->userId}";
 
-        $this->products = Db::getInstance()->queryAll($sql);
+        $this->products = App::getInstance()->connection->queryAll($sql);
         return $this;
     }
 
@@ -42,30 +41,12 @@ class Cart
         return $this->products;
     }
 
-
-//    public function setProductsInCart()
-//    {
-//        $this->productsInCart = (new ModelFactory())->getAllByParam("ProductInCart", "user_id", $this->userId);
-//        return $this;
-//    }
-//
-//
-//    /**
-//     * @return array
-//     */
-//    public function getProductsInCart(): array
-//    {
-//        return $this->productsInCart;
-//    }
-
-
     public function clearCart()
     {
         $sql = "DELETE FROM product_in_cart
 	    WHERE user_id = {$this->userId}";
 
-        if (Db::getInstance()->execute($sql)){
-            //$this->productsInCart = [];
+        if (App::getInstance()->connection->execute($sql)){
             $this->products = [];
         }
     }
@@ -86,7 +67,7 @@ class Cart
 
     public function changeProductQuantity(int $id, int $qty = 1)
     {
-        $productInCart = (new ModelFactory())->getByIds("ProductInCart", ['user_id' => $this->userId,
+        $productInCart = App::getInstance()->modelFactory->getByIds("ProductInCart", ['user_id' => $this->userId,
                                                                             'product_id' => $id]);
 
         $qty = $qty + $productInCart->getQuantity();
@@ -102,7 +83,7 @@ class Cart
 
     public function deleteProduct(int $id)
     {
-        $productInCart = (new ModelFactory())->getByIds("ProductInCart", ['user_id' => $this->userId,
+        $productInCart = App::getInstance()->modelFactory->getByIds("ProductInCart", ['user_id' => $this->userId,
                                                                             'product_id' => $id]);
         $productInCart->delete();
     }

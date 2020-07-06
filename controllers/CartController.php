@@ -4,17 +4,15 @@
 namespace app\controllers;
 
 
+use app\base\App;
 use app\models\Cart;
-use app\models\records\ModelFactory;
-use app\services\Request;
-use app\services\Session;
 
 class CartController extends Controller
 {
     public function actionIndex(int $userId = 0)
     {
-        if(!($userId = (new Session())->getParam('user_id'))){
-            (new Request())->redirect('/login');
+        if(!($userId = App::getInstance()->session->getParam('user_id'))){
+            App::getInstance()->request->redirect('/login');
         }
 
         $cart = new Cart($userId);
@@ -25,44 +23,41 @@ class CartController extends Controller
 
     public function actionAdd()
     {
-        if(!($userId = (new Session())->getParam('user_id'))){
-            (new Request())->redirect('/login');
+        if(!($userId = App::getInstance()->session->getParam('user_id'))){
+            App::getInstance()->request->redirect('/login');
         }
 
-        $request = new Request();
-        $productId = $request->post('product_id');
-        $productQty = $request->post('quantity');
+        $productId = App::getInstance()->request->post('product_id');
+        $productQty = App::getInstance()->request->post('quantity');
 
         $cart = new Cart($userId);
         $cart->addProduct($productId, $productQty);
 
-        $request->redirect('/product/card&id=' . $productId);
+        App::getInstance()->request->redirect('/product/card&id=' . $productId);
     }
 
     public function actionMake_order()
     {
-        $userId = (new Session())->getParam('user_id');
+        $userId = App::getInstance()->session->getParam('user_id');
         $cart = new Cart($userId);
         $cart->setProducts();
         $cart->makeOrder();
-        (new Request())->redirect('/account');
+        App::getInstance()->request->redirect('/account');
     }
 
     public function actionChange_quantity()
     {
-        $userId = (new Session())->getParam('user_id');
+        $userId = App::getInstance()->session->getParam('user_id');
         $cart = new Cart($userId);
 
-        $request = new Request();
-
-        if($id = $request->post('add')){
+        if($id = App::getInstance()->request->post('add')){
             $cart->changeProductQuantity($id);
-        } elseif ($id = $request->post('reduce')) {
+        } elseif ($id = App::getInstance()->request->post('reduce')) {
             $cart->changeProductQuantity($id, -1);
-        } elseif ($id = $request->post('delete')) {
+        } elseif ($id = App::getInstance()->request->post('delete')) {
             $cart->deleteProduct($id);
         }
 
-        $request->redirect('/cart');
+        App::getInstance()->request->redirect('/cart');
     }
 }

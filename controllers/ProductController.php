@@ -4,22 +4,20 @@
 namespace app\controllers;
 
 
-use app\models\records\ModelFactory;
-use app\models\records\Product;
-use app\services\Request;
+use app\base\App;
 
 class ProductController extends Controller
 {
     public function actionIndex()
     {
-        $products = (new ModelFactory())->getAll("Product");
+        $products = App::getInstance()->modelFactory->getAll("Product");
         echo $this->render('catalog', ['products' => $products]);
     }
 
     public function actionCard()
     {
-        $id = (new Request())->get('id');
-        $model = (new ModelFactory())->getById("Product", $id);
+        $id = App::getInstance()->request->get('id');
+        $model = App::getInstance()->modelFactory->getById("Product", $id);
         echo $this->render('product_card', ['model' => $model]);
     }
 }

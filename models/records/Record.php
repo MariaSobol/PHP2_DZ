@@ -1,10 +1,8 @@
 <?php
 namespace app\models\records;
 
+use app\base\App;
 use app\interfaces\IRecord;
-use app\models\records\ModelFactory;
-use app\services\Db;
-
 
 abstract class Record implements IRecord
 {
@@ -12,7 +10,7 @@ abstract class Record implements IRecord
 
     public function __construct()
     {
-        $this->db = Db::getInstance();
+        $this->db = App::getInstance()->connection;
     }
 
 //    public function getById(int $id)
@@ -86,8 +84,7 @@ abstract class Record implements IRecord
 
     public function save()
     {
-        //$modelFromDb = $this->getById($this->id);
-        $modelFromDb = (new ModelFactory())->getById(get_called_class(), $this->id);
+        $modelFromDb = App::getInstance()->modelFactory->getById(get_called_class(), $this->id);
         if(is_null($modelFromDb)){
             return($this->insert());
         }

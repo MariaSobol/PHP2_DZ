@@ -65,4 +65,9 @@ html, body {
     grid-template-columns: 50% 50%
 }
 
+.form > input, textarea{
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 

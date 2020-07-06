@@ -3,7 +3,7 @@
 
 namespace app\models\records;
 
-use app\models\records\ModelFactory;
+use app\base\App;
 
 class ProductInOrder extends Record
 {
@@ -78,7 +78,7 @@ class ProductInOrder extends Record
 
     public function save()
     {
-        $modelFromDb = (new ModelFactory())->getByIds(get_called_class(), [
+        $modelFromDb = App::getInstance()->modelFactory->getByIds(get_called_class(), [
             'product_id' => $this->product_id,
             'order_id' => $this->order_id
         ]);

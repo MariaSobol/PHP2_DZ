@@ -1,6 +1,7 @@
 <?php
 /** @var $content */
-?>
+
+use app\base\App; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +15,7 @@
 <div class="wrapper container">
     <div class="top">
 <!--        TODO: Переделать подключение меню через рендер-->
-        <?php include VIEWS_DIR . "layouts/menu.php";?>
+        <?php include App::getInstance()->getConfig('viewsDir') . "layouts/menu.php";?>
 
         <?=$content?>
     </div>

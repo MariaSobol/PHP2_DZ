@@ -4,28 +4,23 @@
 namespace app\controllers;
 
 
-use app\services\Request;
-use app\services\Session;
+use app\base\App;
 
 class AccountController extends Controller
 {
     public function actionIndex()
     {
-
-        $session = new Session();
-        $request = new Request();
-
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if($request->post('logout')){
-                $session->deleteSession();
+            if(App::getInstance()->request->post('logout')){
+                App::getInstance()->session->deleteSession();
             }
         }
 
-        if ($login = $session->getParam('user_login')) {
-            $userName = $session->getParam('user_name');
+        if ($login = App::getInstance()->session->getParam('user_login')) {
+            $userName = App::getInstance()->session->getParam('user_name');
             echo $this->render('account', ['login' => $login, 'userName' => $userName]);
         }else {
-            $request->redirect('/login');
+            App::getInstance()->request->redirect('/login');
         }
     }
 }
