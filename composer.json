@@ -1,6 +1,7 @@
 {
     "name": "msobol/myproject.com",
     "require": {
+        "phpunit/phpunit": "^9.2"
     },
     "autoload": {
         "psr-4": {
